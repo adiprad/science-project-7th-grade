@@ -25,15 +25,12 @@ function matrixInit() {
 }
 function matrixStart() {
   var uniques = chance.unique(chance.integer, 5, {min: 0, max: 24});
-  randomFills = [new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape()];
-  randomFills.forEach(function(element, index, array) {
-    randomFills[index].graphics
-    .beginFill("DeepSkyBlue")
+  uniques.forEach(function(element, index, array) {
+    matrixGrid[uniques[index]].graphics
+    .beginFill("Blue")
     .drawRect(0, 0, matrixGridWidth, matrixGridHeight);
-    matrixGrid[index].x = (index % 5)*60;
-    matrixGrid[index].y = (Math.floor(index / 5))*60;
-    stage.addChild(matrixGrid[index]);
   });
+  stage.update();
 }
 
 
