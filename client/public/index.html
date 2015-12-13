@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Science Proj.</title>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="createjs-2015.05.21.min.js"></script>
+    <script src="http://chancejs.com/chance.min.js"></script>
+    <script src="matrix.js"></script>
+    <script src="letter.js"></script>
+    <script src="concentration.js"></script>
+    <style>
+		  #canvas {
+		    margin-top: 10px;
+		  }
+		  body {
+		    text-align: center;
+		  }
+    </style>
+  </head>
+  
+  <body onLoad="concentrationInit();">
+    <header class="mdl-layout__header">
+      <h1 id="header">Matrix</h1>
+    </header>
+    <br>
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" onclick="concentrationStart();" id="action">Start</button>
+    <br>
+    <canvas id="canvas" width="290" height="290"></canvas>
+    
+  </body>
+  
+</html>

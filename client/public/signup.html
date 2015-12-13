@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<script>
+			var postData = {
+				user_data: {
+					age: "30",
+					name: "Adi",
+					email: "abc1@aaa.com"
+				}
+			};
+			$.ajax({
+				url: "http://localhost:3000/api/v1/user",
+				type: "POST",
+				dataType: "json",
+				data: JSON.stringify(postData),
+				processData: false,
+				contentType: "application/json",
+				success: function(data, textStatus, jqXHR) {
+					console.log("Response: " + JSON.stringify(data));
+				},
+				error: function(data, textStatus, err) {
+					console.log("ERR: " + JSON.stringify(data));
+				}
+			});
+		</script>
+
+	</body>
+</html>
