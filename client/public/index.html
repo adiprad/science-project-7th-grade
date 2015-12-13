@@ -14,6 +14,7 @@
     <script src="matrix.js"></script>
     <script src="letter.js"></script>
     <script src="concentration.js"></script>
+    <script src="init.js"></script>
     <style>
 		  #canvas {
 		    margin-top: 10px;
@@ -24,15 +25,23 @@
     </style>
   </head>
   
-  <body onLoad="concentrationInit();">
+  <body onload="concentrationInit()">
     <header class="mdl-layout__header">
       <h1 id="header">Matrix</h1>
     </header>
     <br>
-    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" onclick="concentrationStart();" id="action">Start</button>
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" id="action" onclick="concentrationStart()">Start</button>
     <br>
     <canvas id="canvas" width="290" height="290"></canvas>
-    
+    <br>
+    <form id="answerForm">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="answerField">
+            <input class="mdl-textfield__input" id="answer" pattern="[a-zA-Z]{1}">
+            <label class="mdl-textfield__label" for="answer">Answer</label>
+            <span class="mdl-textfield__error">Input is not valid!</span>
+        </div>
+        <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" id="action" id="submitButton">submit</button>
+    </form>
   </body>
   
 </html>

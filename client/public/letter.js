@@ -31,12 +31,12 @@ function letterStart() {
 	stage.update();
 
 	setTimeout(function() {
-		action.innerHTML = "";
+		$("#action").toggle();
 
 		txt.text = "";
 
 		//generate random number
-		var letter = chance.integer({min: 0, max: 7});
+		var letter = chance.integer({min: 1, max: 7});
 		
 		//convert to cardinal
 		if(letter == 1) {
@@ -49,6 +49,14 @@ function letterStart() {
 			letter += "th";
 		}
 
-		header.innerHTML = "What was the "+letter+" letter in the sequence?";
+		$("#header").html("What was the "+letter+" letter in the sequence?");
+
+		$("#answerForm").toggle();
+
+		$("#answerForm").submit(function () {
+			
+		});
+
+		stage.update();
 	}, 7000);
 }
