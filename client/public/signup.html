@@ -1,32 +1,97 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		
-	</head>
-	<body>
-		<script>
-			var postData = {
-				user_data: {
-					age: "30",
-					name: "Adi",
-					email: "abc1@aaa.com"
-				}
-			};
-			$.ajax({
-				url: "http://localhost:3000/api/v1/user",
-				type: "POST",
-				dataType: "json",
-				data: JSON.stringify(postData),
-				processData: false,
-				contentType: "application/json",
-				success: function(data, textStatus, jqXHR) {
-					console.log("Response: " + JSON.stringify(data));
-				},
-				error: function(data, textStatus, err) {
-					console.log("ERR: " + JSON.stringify(data));
-				}
-			});
-		</script>
+  <head>
 
-	</body>
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- jQuery 2.1.3 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- AlertifyJS 1.0.6 -->
+    <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.6/dist/js/alertify.js"></script>
+
+    <!-- Styles -->
+    <style>
+      body {
+        text-align: center;
+      }
+      .mdl-textfield {
+        width: 400px;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="mdl-layout__header">
+      <h1 id="header">Signup</h1>
+    </header>
+    <!-- Name field -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" id="nameField">
+      <label class="mdl-textfield__label" for="nameField">Name...</label>
+      <span class="mdl-textfield__error">Input is not a valid name!</span>
+    </div>
+    <br>
+    <br>
+    <!-- Age field -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" pattern="([2][5-9]|[3-6][0-9])" id="ageField">
+      <label class="mdl-textfield__label" for="ageField">Age...</label>
+      <span class="mdl-textfield__error">Input is not a valid age!</span>
+    </div>
+    <br>
+    <br>
+    <!-- Email field -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="emailField">
+      <label class="mdl-textfield__label" for="emailField">Email...</label>
+      <span class="mdl-textfield__error">Input is not a valid email!</span>
+    </div>
+    <br>
+    <br>
+    <!-- Distraction amount field -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" pattern="[0-3]" id="distractionField">
+      <label class="mdl-textfield__label" for="emailField">Distraction amount...</label>
+      <span class="mdl-textfield__error">Input is not a valid distraction amount!</span>
+    </div>
+    <br>
+    <!-- Submit button -->
+    <button id="submit" class="mdl-button mdl-button--large mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">submit</button>
+    
+    <!-- Script -->
+    <script type="text/javascript">
+      $("#submit").click(function () {
+        var userData = {
+          user_data: {
+            age: $("#ageField").val(),
+            name: $("#nameField").val(),
+            email: $("#emailField").val(),
+            distraction_amt: $("#distractionField").val()
+          }
+        };
+        
+        $.ajax({
+          url: "http://localhost:8080/api/v1/user",
+          type: "POST",
+          data: JSON.stringify(userData),
+          contentType: 'application/json',
+          processData: false,
+          success: function(data, textStatus, jqXHR) {
+            console.log(JSON.stringify(data) + ", " + textStatus);
+            alertify.success("Data successfully submitted!");
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ", " + errorThrown);
+            alertify.error("Oops! There was an error sending the data.");
+          }
+        });
+      });
+    </script>
+
+  </body>
 </html>

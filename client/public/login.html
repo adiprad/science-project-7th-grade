@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- jQuery 2.1.3 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- AlertifyJS 1.0.6 -->
+    <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.6/dist/js/alertify.js"></script>
+
+    <!-- Styles -->
+    <style type="text/css">
+	  body {
+	    text-align: center;
+	  }
+	  .mdl-textfield {
+	    width: 400px;
+	  }
+    </style>
+
+	<title>Login</title>
+</head>
+<body>
+	<!-- Header -->
+    <header class="mdl-layout__header">
+      <h1 id="header">Login</h1>
+    </header>
+    <!-- Email field -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="emailField">
+      <label class="mdl-textfield__label" for="emailField">Enter Email</label>
+      <span class="mdl-textfield__error">Input is not a valid email!</span>
+    </div>
+    <br>
+    <br>
+    <!-- Submit button -->
+    <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">submit</button>
+
+    <script type="text/javascript">
+    	$(function () {
+    		$("#submit").click(function () {
+    			$.ajax({
+		          	url: "http://localhost:8080/api/v1/user/" + $("#emailField").val(),
+		          	type: "GET",
+		          	success: function(data, textStatus, jqXHR) {
+		          	  $.ajax({
+		          	  	url: "http://localhost:8080/api/v1/user/" + data.id + "/question",
+		          	  	type: "GET",
+		          	  	success: function (data, textStatus, jqXHR) {
+		          	  		if (data.length >= 15) {
+		          	  		   console.log("User " + data.id + " has already completed the test.");
+		          	           alertify.error("Oops! You have already completed the test!");
+		          	  		}
+		          	  		else {
+		          	  			window.open("http://localhost:8080/index.html", "_self");
+		          	  		}
+		          	  	},
+		          	  	error: function (jqXHR, textStatus, errorThrown) {
+
+		          	  	}
+		          	  });
+		          	},
+		          	error: function (jqXHR, textStatus, errorThrown) {
+		          	  console.log(textStatus + ", " + errorThrown);
+		          	  alertify.error("Oops! There was an error sending the data.");
+		          	}
+		        });
+    		});
+    	});
+    </script>
+</body>
+</html>

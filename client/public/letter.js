@@ -54,7 +54,7 @@ function letterStart() {
 		$("#answerForm").toggle();
 
 		$("#answerForm").submit(function () {
-			
+			location.reload();
 		});
 
 		stage.update();

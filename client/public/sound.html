@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script>
+      var soundID = "Thunder";
+
+      function loadSound () {
+        createjs.Sound.registerSound("05-Binrpilot-Underground.mp3", soundID);
+      }
+
+      function playSound () {
+        createjs.Sound.play(soundID);
+      }
+    </script>
+  </head>
+  <body onload="loadSound();">
+    <button onclick="playSound();">Play Sound</button>
+  </body>
+</html>
