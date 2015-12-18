@@ -5,6 +5,7 @@ var matrixGridHeight = 50;
 var randomFills;
 var actionButton;
 var uniques;
+var selectedBoxes;
 function matrixInit() {
   actionButton = document.getElementById('action');
   stage = new createjs.Stage("canvas");
@@ -15,6 +16,13 @@ function matrixInit() {
     new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),
     new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape(),new createjs.Shape()
   ];
+  selectedBoxes = [
+    false, false, false, false, false,
+    false, false, false, false, false,
+    false, false, false, false, false,
+    false, false, false, false, false,
+    false, false, false, false, false
+  ];
 }
 function matrixStart() {
 
@@ -24,7 +32,6 @@ function matrixStart() {
     .drawRect(0, 0, matrixGridWidth, matrixGridHeight);
     element.x = (index % 5)*60;
     element.y = (Math.floor(index / 5))*60;
-    element.selected = false;
     stage.addChild(element);
   });
 
@@ -46,15 +53,15 @@ function matrixStart() {
     stage.update();
 
     matrixGrid.forEach(function (element, index, array) {
-      matrixGrid[index].on("click", function(evt) {
-        if(!matrixGrid[index].selected) {
-          matrixGrid[index].graphics.beginFill("LightGreen");
-          matrixGrid[index].selected = true;
+      element.on("click", function(evt) {
+        if(!selectedBoxes[index]) {
+          element.graphics.beginFill("LightGreen");
+          selectedBoxes[index] = true;
         } else {
-          matrixGrid[index].graphics.beginFill("DeepSkyBlue");
-          matrixGrid[index].selected = false;
+          element.graphics.beginFill("DeepSkyBlue");
+          selectedBoxes[index] = false;
         }
-        matrixGrid[index].graphics.drawRect(0, 0, matrixGridWidth, matrixGridHeight);
+        element.graphics.drawRect(0, 0, matrixGridWidth, matrixGridHeight);
         stage.update();
       });
     });    
@@ -66,17 +73,37 @@ function matrixStart() {
   }, 4000);
 }
 function matrixSubmit() {
-  console.log('matrixSubmit(): called')
   var numerator = 0;
   var denominator = 5;
-  matrixGrid.forEach(function (element, index, array) {
-    if(matrixGrid[index].selected) {
-      numerator++;
+  matrixGrid.forEach(function (element, gridIndex, array) {
+    uniques.forEach(function (element, uniquesIndex, array) {
+      if(selectedBoxes[gridIndex] = true && gridIndex == uniques[uniquesIndex]) {
+        numerator++;
+        console.log("Numerator : " + numerator);
+      }
+    });
+  });
+  var questionData = {
+     score_percent : numerator/denominator,
+     distraction_id : 1,
+     time_taken : 100
+  };
+  $.ajax({
+    url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
+    type: "POST",
+    data: JSON.stringify(questionData),
+    contentType: 'application/json',
+    processData: false,
+    success: function(data, textStatus, jqXHR) {
+      console.log(JSON.stringify(data) + ", " + textStatus);
+      alertify.success("Data successfully submitted!");
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus + ", " + errorThrown);
+      alertify.error("Oops! There was an error sending the data.");
     }
   });
-
-  console.log("Numerator : " + numerator);
-  location.reload();
+  //location.reload();
   
 }
 
