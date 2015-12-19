@@ -94,7 +94,7 @@ function matrixSubmit() {
   });
   var questionData = {
      score_percent : numerator/denominator,
-     distraction_id : 1,
+     distraction_id : localStorage.getItem("distractionAmt"),
      time_taken : 100
   };
   $.ajax({

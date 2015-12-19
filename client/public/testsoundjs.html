@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script>
+
+      function loadSound () {
+        createjs.Sound.on("fileload", function (event) {
+          createjs.Sound.play("dubstep");
+        });
+        createjs.Sound.registerSound("bensound-popdance.mp3", "popdance");
+        createjs.Sound.registerSound("bensound-dubstep.mp3", "dubstep");
+      }
+
+      
+
+      function handleLoad(event) {
+        playSound();
+      }
+    </script>
+  </head>
+  <body onload="loadSound();">
+    <button onclick="" class="playSound">Play Sound</button>
+  </body>
+</html>

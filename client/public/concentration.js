@@ -26,7 +26,7 @@ function concentrationInit() {
     //init questionData
     questionData = {
       score_percent: 0,
-      distraction_id: 1,
+      distraction_id: localStorage.getItem("distractionAmt"),
       time_taken: 100
     };
 }

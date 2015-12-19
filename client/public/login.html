@@ -48,6 +48,7 @@
 		          	type: "GET",
 		          	success: function(data, textStatus, jqXHR) {
 		          	  var id = data.id;
+		          	  var distAmt = data.user_data.distraction_amt;
 		          	  $.ajax({
 		          	  	url: "http://localhost:8080/api/v1/user/" + id + "/question",
 		          	  	type: "GET",
@@ -58,17 +59,18 @@
 		          	  		}
 		          	  		else {
 		          	  			localStorage.setItem("userId", id + "");
+		          	  			localStorage.setItem("distractionAmt", distAmt + "");
 		          	  			window.open("http://localhost:8080/index.html", "_self");
 		          	  		}
 		          	  	},
 		          	  	error: function (jqXHR, textStatus, errorThrown) {
-
+		          	  		alertify.error("Oops! There was an error in getting the data");
 		          	  	}
 		          	  });
 		          	},
 		          	error: function (jqXHR, textStatus, errorThrown) {
 		          	  console.log(textStatus + ", " + errorThrown);
-		          	  alertify.error("Oops! There was an error sending the data.");
+		          	  alertify.error("Oops! There was an error getting the data.");
 		          	}
 		        });
     		});
