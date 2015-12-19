@@ -112,7 +112,7 @@ function matrixSubmit() {
       alertify.error("Oops! There was an error sending the data.");
     }
   });
-  //location.reload();
+  location.reload();
   
 }
 

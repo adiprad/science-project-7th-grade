@@ -2,6 +2,7 @@ var stage;
 var action;
 var header;
 var unicodes;
+var questionData;
 function letterInit() {
 	//create stage
 	stage = new createjs.Stage("canvas");
@@ -12,8 +13,15 @@ function letterInit() {
 	//add header
 	header = document.getElementById("header");
 
-	//generate 7 unicode numbers
+	//generate 8 unicode numbers
 	unicodes = chance.unique(chance.integer, 8, {min: 65, max: 90});
+
+	//init questionData
+	questionData = {
+		score_percent: 0,
+		distraction_id: 1,
+		time_taken: 100
+	};
 }
 function letterStart() {
 	header.innerHTML = "Memorize the letters!";
@@ -23,7 +31,7 @@ function letterStart() {
 	
 	//convert unicodes to chars
 	unicodes.forEach(function(element, index, array) {
-		txt.text += String.fromCharCode(unicodes[index]);
+		txt.text += String.fromCharCode(element);
 	});
 	
 	//add text to canvas
@@ -36,25 +44,59 @@ function letterStart() {
 		txt.text = "";
 
 		//generate random number
-		var letter = chance.integer({min: 1, max: 7});
+		var letter = chance.integer({min: 1, max: 8});
 		
+		var letterString;
 		//convert to cardinal
 		if(letter == 1) {
-			letter += "st";
+			letterString = letter + "st";
 		} else if(letter == 2) {
-			letter += "nd";
+			letterString = letter + "nd";
 		} else if(letter == 3) {
-			letter += "rd";
+			letterString = letter + "rd";
 		} else {
-			letter += "th";
+			letterString = letter + "th";
 		}
 
-		$("#header").html("What was the "+letter+" letter in the sequence?");
+		$("#header").html("What was the "+letterString+" letter in the sequence?");
 
 		$("#answerForm").toggle();
 
 		$("#answerForm").submit(function () {
-			location.reload();
+			var input = $("#answer").val().toUpperCase();
+
+			unicodes.forEach(function (element, index, array) {
+				var charData = String.fromCharCode(element);
+				if(charData == input) {
+					if(index == (letter-1)) {
+						questionData.score_percent = 1;
+					} else if(Math.abs(letter-index-1) == 1) {
+						questionData.score_percent = 0.8;
+					} else if(Math.abs(letter-index-1) == 2) {
+						questionData.score_percent = 0.6;
+					} else {
+						questionData.score_percent = 0.4;
+					}
+				} 
+			});
+			
+
+			$.ajax({
+			  url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
+			  type: "POST",
+			  data: JSON.stringify(questionData),
+			  contentType: 'application/json',
+			  processData: false,
+			  success: function(data, textStatus, jqXHR) {
+			    console.log(JSON.stringify(data) + ", " + textStatus);
+			    alertify.success("Data successfully submitted!");
+			  },
+			  error: function(jqXHR, textStatus, errorThrown) {
+			    console.log(textStatus + ", " + errorThrown);
+			    alertify.error("Oops! There was an error sending the data.");
+			  }
+			});
+			//location.reload();
 		});
 
 		stage.update();
