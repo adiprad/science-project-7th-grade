@@ -7,6 +7,7 @@ var actionButton;
 var uniques;
 var selectedBoxes;
 function matrixInit() {
+  //console.log("matrixInit called");
   actionButton = document.getElementById('action');
   stage = new createjs.Stage("canvas");
   matrixGrid = [
@@ -23,9 +24,11 @@ function matrixInit() {
     false, false, false, false, false,
     false, false, false, false, false
   ];
+  uniques = chance.unique(chance.integer, 5, {min: 0, max: 24});
+
 }
 function matrixStart() {
-
+  //console.log("matrixStart calle");
   matrixGrid.forEach(function (element, index, array) {
     element.graphics
     .beginFill("DeepSkyBlue")
@@ -35,15 +38,17 @@ function matrixStart() {
     stage.addChild(element);
   });
 
-  uniques = chance.unique(chance.integer, 5, {min: 0, max: 24});
   uniques.forEach(function(element, index, array) {
     matrixGrid[uniques[index]].graphics
     .beginFill("LightGreen")
     .drawRect(0, 0, matrixGridWidth, matrixGridHeight);
+    //console.log("Unique [" + index + "] : " + element);
   });
+
   stage.update();
   actionButton.innerHTML = "";
-  actionButton.onclick = function () {};
+  actionButton.disabled = true;
+  //actionButton.onclick = function () {};
   setTimeout(function() {
     uniques.forEach(function (element, index, array) {
       matrixGrid[uniques[index]].graphics
@@ -54,6 +59,7 @@ function matrixStart() {
 
     matrixGrid.forEach(function (element, index, array) {
       element.on("click", function(evt) {
+        //console.log("Clicked on : " + index );
         if(!selectedBoxes[index]) {
           element.graphics.beginFill("LightGreen");
           selectedBoxes[index] = true;
@@ -67,7 +73,10 @@ function matrixStart() {
     });    
 
     actionButton.innerHTML = "Submit";
+    actionButton.disabled = false;
     $("#action").click(function () {
+      //console.log("uniques : " + uniques);
+      //console.log("Selected boxes: " + selectedBoxes);
       matrixSubmit();
     });
   }, 4000);
@@ -75,13 +84,13 @@ function matrixStart() {
 function matrixSubmit() {
   var numerator = 0;
   var denominator = 5;
-  matrixGrid.forEach(function (element, gridIndex, array) {
-    uniques.forEach(function (element, uniquesIndex, array) {
-      if(selectedBoxes[gridIndex] = true && gridIndex == uniques[uniquesIndex]) {
-        numerator++;
-        console.log("Numerator : " + numerator);
-      }
-    });
+
+  uniques.forEach(function (element, uniquesIndex, array) {
+    //console.log("unique : " + element + " Selected box : " + selectedBoxes[element]);
+    if(selectedBoxes[element] == true) {
+      numerator++;
+      //console.log("Numerator : " + numerator);
+    }
   });
   var questionData = {
      score_percent : numerator/denominator,
