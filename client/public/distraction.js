@@ -11,15 +11,54 @@ window.distraction = {
 		"extremeaction"
 	]
 };
+
+function getNextVideoIndex() {
+	var videoIndex = localStorage.getItem("videoIndex");
+	if(!videoIndex) {
+		localStorage.setItem("videoIndex", "0");
+		videoIndex = "0";
+		return parseInt(videoIndex);
+	}
+
+	var temp = parseInt(videoIndex) + 1;
+	if (temp == distraction.videoList.length)
+		temp = 0;
+	localStorage.setItem("videoIndex", temp + "");
+	return temp;
+}
+
+function getNextAudioIndex() {
+	var audioIndex = localStorage.getItem("audioIndex");
+	if(!audioIndex) {
+		localStorage.setItem("audioIndex", "0");
+		audioIndex = "0";
+		return parseInt(audioIndex);
+	}
+
+	var temp = parseInt(audioIndex) + 1;
+	if (temp == distraction.audioList.length)
+		temp = 0;
+	localStorage.setItem("audioIndex", temp + "");
+	return temp;
+}
+
 function addDistraction (type) {
 	console.log("addDistraction : " + type);
 	if (type == "video") {
-		var random = chance.integer({min: 0, max: distraction.videoList.length-1});
-		$("#distraction").append("<br><br><iframe src='http://youtube.com/embed/"+distraction.videoList[random]+"?autoplay=true&theme=light' style='width: 400px; height: 225px;'></iframe>");
+
+		var videoIndex = getNextVideoIndex();
+		console.log("Video Index: " + videoIndex);
+
+		$("#distraction").append("<br><br><iframe src='http://youtube.com/embed/"+distraction.videoList[videoIndex]+"?autoplay=true&theme=light&controls=0' style='width: 400px; height: 225px; pointer-events: none;'></iframe>");
+		$("#distraction").click(function (evt) {
+			return false;
+		});
 	} else if(type == "audio") {
-		var random = chance.integer({min: 0, max: distraction.audioList.length-1});
-		console.log("random int : " + random);
-		createjs.Sound.play(distraction.audioList[random]);
+		
+		var audioIndex = getNextAudioIndex();
+		console.log("Audio Index: " + audioIndex);
+
+		createjs.Sound.play(distraction.audioList[audioIndex]);
 	} else {
 		console.log("Invalid type!");
 	}

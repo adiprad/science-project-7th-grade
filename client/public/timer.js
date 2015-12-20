@@ -4,14 +4,14 @@ function Timer(timeLimit) {
 	t = null;
 	this.start = function (onTick) {
 		t = setInterval(function() {
-			console.log("Timer tick: " + currentTime);
+			//console.log("Timer tick: " + currentTime);
 			if(currentTime == 0) {
 				clearInterval(t);
 			}
 			onTick(currentTime);
 			currentTime--;
 		}, 1000);
-		console.log("Timer started: " + currentTime);
+		//console.log("Timer started: " + currentTime);
 	};
 	this.stop = function() {
 		clearInterval(t);

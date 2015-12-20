@@ -9,6 +9,7 @@ var counter = 0;
 var turns = 0;
 var cssColors = ["Red", "Green", "Blue", "Tan", "Orange", "Yellow", "Pink", "Purple", "LightSkyBlue", "LightGreen", "Teal", "DarkRed", "Olive", "Silver", "DarkKhaki", "BlanchedAlmond", "BlueViolet", "SlateGray"];
 var boxesSelected = [];
+var timer;
 function concentrationInit() {
   	header = document.getElementById("header");
   	actionButton = document.getElementById("action");
@@ -29,8 +30,17 @@ function concentrationInit() {
       distraction_id: localStorage.getItem("distractionAmt"),
       time_taken: 100
     };
+    timer = new Timer(60);
 }
 function concentrationStart() {
+    timer.start(function (currentTime) {
+      $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
+      if(currentTime == 0) {
+        questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
+        questionData.time_taken = 100;
+        questionDataPost(questionData);
+      }
+    });
  	  concentrationGrid.forEach(function (element, index, array) {
     	element.graphics
     		.beginFill("black")
@@ -73,25 +83,13 @@ function concentrationStart() {
             concentrationGrid[boxesSelected[0]].finished = true;
             concentrationGrid[boxesSelected[1]].finished = true;  
             counter++;
-            console.log(counter);
+            //console.log(counter);
             if(counter == 8) {
+              timer.stop();
               questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
-              $.ajax({
-                url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
-                type: "POST",
-                data: JSON.stringify(questionData),
-                contentType: 'application/json',
-                processData: false,
-                success: function(data, textStatus, jqXHR) {
-                  console.log(JSON.stringify(data) + ", " + textStatus);
-                  alertify.success("Data successfully submitted!");
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                  console.log(textStatus + ", " + errorThrown);
-                  alertify.error("Oops! There was an error sending the data.");
-                }
-              });
-              //location.reload();
+              questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
+              questionDataPost(questionData);
+              location.reload();
             }
           } else {
             concentrationGrid[boxesSelected[0]].graphics
@@ -103,7 +101,7 @@ function concentrationStart() {
           }
           boxesSelected = [];
           stage.update();
-        }, 500);
+        }, 400);
         
   		});
   	});

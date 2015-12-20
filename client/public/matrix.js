@@ -69,10 +69,10 @@ function matrixToSolve () {
   timer.start(function (currentTime) {
     $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
     if(currentTime == 0) {
-      matrixDataPost({
+      questionDataPost({
         score_percent : numerator/denominator,
         distraction_id : localStorage.getItem("distractionAmt"),
-        time_taken : Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100)
+        time_taken : 100
       });
     }
   });
@@ -119,33 +119,13 @@ function matrixSubmit() {
     }
   });
 
-  console.log("Max time: " + timer.maxTime);
-  console.log("Time left : " + timer.getCurrentTime());
 
-  matrixDataPost({
+  questionDataPost({
      score_percent : numerator/denominator,
      distraction_id : localStorage.getItem("distractionAmt"),
      time_taken : Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100)
   });
 }
 
-function matrixDataPost (questionData) {
-  $.ajax({
-    url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
-    type: "POST",
-    data: JSON.stringify(questionData),
-    contentType: 'application/json',
-    processData: false,
-    success: function(data, textStatus, jqXHR) {
-      console.log(JSON.stringify(data) + ", " + textStatus);
-      alertify.success("Data successfully submitted!");
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus + ", " + errorThrown);
-      alertify.error("Oops! There was an error sending the data.");
-    }
-  });
-  location.reload();
-}
 
 

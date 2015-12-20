@@ -3,6 +3,8 @@ var action;
 var header;
 var unicodes;
 var questionData;
+var timer;
+
 function letterInit() {
 	//create stage
 	stage = new createjs.Stage("canvas");
@@ -22,8 +24,12 @@ function letterInit() {
 		distraction_id: localStorage.getItem("distractionAmt"),
 		time_taken: 100
 	};
+
+	// Initialize timer object with max time of 20 seconds
+	timer = new Timer(20);
 }
 function letterStart() {
+
 	header.innerHTML = "Memorize the letters!";
 
 	//create text object
@@ -41,10 +47,19 @@ function letterStart() {
 	setTimeout(function() {
 		$("#action").toggle();
 
+		timer.start(function (currentTime) {
+	      $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
+	      if(currentTime == 0) {
+	        questionData.score_percent = 0;
+	        questionData.time_taken = 100;
+	        questionDataPost(questionData);
+	      }
+	    });
+
 		txt.text = "";
 
 		//generate random number
-		var letter = chance.integer({min: 1, max: 8});
+		var letter = chance.integer({min: 3, max: 8});
 		
 		var letterString;
 		//convert to cardinal
@@ -63,8 +78,10 @@ function letterStart() {
 		$("#answerForm").toggle();
 
 		$("#answerForm").submit(function () {
-			var input = $("#answer").val().toUpperCase();
 
+			timer.stop();
+
+			var input = $("#answer").val().toUpperCase();
 			unicodes.forEach(function (element, index, array) {
 				var charData = String.fromCharCode(element);
 				if(charData == input) {
@@ -79,24 +96,10 @@ function letterStart() {
 					}
 				} 
 			});
-			
+		    questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
+		    questionDataPost(questionData);
 
-			$.ajax({
-			  url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
-			  type: "POST",
-			  data: JSON.stringify(questionData),
-			  contentType: 'application/json',
-			  processData: false,
-			  success: function(data, textStatus, jqXHR) {
-			    console.log(JSON.stringify(data) + ", " + textStatus);
-			    alertify.success("Data successfully submitted!");
-			  },
-			  error: function(jqXHR, textStatus, errorThrown) {
-			    console.log(textStatus + ", " + errorThrown);
-			    alertify.error("Oops! There was an error sending the data.");
-			  }
-			});
-			//location.reload();
+			location.reload();
 		});
 
 		stage.update();

@@ -47,7 +47,7 @@ $(function () {
 	console.log("lastDistType : " + lastDistType);
 	
 	createjs.Sound.on("fileload", function (event) {
-		if(event.id == "bensound-extremeaction") {
+		if(event.id == "extremeaction") {
 			console.log("File load event : " + JSON.stringify(event));
 			switch(distAmt) {
 				case 0:
