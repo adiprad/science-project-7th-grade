@@ -4,22 +4,38 @@
   <head>
     <meta charset="utf-8">
     <title>Science Proj.</title>
+    <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <!-- Lato font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    <!-- CreateJS -->
     <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    
+    <!-- Magnific Popup -->
     <link rel="stylesheet" href="magnific-popup.css">
     <script src="jquery.magnific-popup.min.js"></script>
-    <!--<script src="createjs-2015.05.21.min.js"></script>-->
+    
+    <!-- ChanceJS -->
     <script src="http://chancejs.com/chance.min.js"></script>
+    
+    <!-- AlertifyJS -->
     <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.6/dist/js/alertify.js"></script>
+    
+    <!-- Project Scripts -->
+    <script src="timer.js"></script>
     <script src="matrix.js"></script>
     <script src="letter.js"></script>
     <script src="concentration.js"></script>
     <script src="distraction.js"></script>
     <script src="init.js"></script>
+    
     <style>
 		  #canvas {
 		    margin-top: 10px;
@@ -33,12 +49,21 @@
             bottom: 0;
             right: 0;
           }
+          #timer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            color: white;
+            font-size: 25px;
+          }
     </style>
   </head>
   
   <body>
     <header class="mdl-layout__header">
-      <h2 id="header">Matrix</h2>
+      <h2 id="header">Matrix
+      </h2>
+      <div id="timer"></div>
     </header>
     <div id="app">
         <br>
@@ -60,7 +85,6 @@
     <div id="intro">
         <br>
         <button id="startTest" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored">Start the Test</button>
-        <!-- <a id="open-popup" href="http://www.youtube.com/watch?v=NPW6PqmE4yg">Learn JQuery!</a> -->
     </div>
   </body>
   

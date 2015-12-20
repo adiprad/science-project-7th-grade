@@ -1,12 +1,25 @@
-function Timer(params) {
-	this.timeLimit = params.timeLimit;
-	this.start = function () {
-		var t = setInterval(function() {
-			if(this.timeLimit == 0) {
+function Timer(timeLimit) {
+	this.maxTime = timeLimit;
+	currentTime = timeLimit;
+	t = null;
+	this.start = function (onTick) {
+		t = setInterval(function() {
+			console.log("Timer tick: " + currentTime);
+			if(currentTime == 0) {
 				clearInterval(t);
 			}
-			console.log(this.timeLimit);
-			this.timeLimit--;
+			onTick(currentTime);
+			currentTime--;
 		}, 1000);
-	}
+		console.log("Timer started: " + currentTime);
+	};
+	this.stop = function() {
+		clearInterval(t);
+	};
+	this.getCurrentTime = function() {
+		return currentTime;
+	};
+	this.setCurrentTime = function(val) {
+		currentTime = val;
+	};
 }
