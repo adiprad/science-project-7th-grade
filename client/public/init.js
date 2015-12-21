@@ -25,6 +25,7 @@ $(function () {
 		{path: "./bensound-extremeaction.mp3", id: "extremeaction"}
 	]);
 
+
 	//remove
 	//localStorage.setItem("question", "0");
 	question = localStorage.getItem("question");
@@ -36,6 +37,11 @@ $(function () {
 	console.log('Question: ' + question);
 	var questionInt = parseInt(question)+1;
 
+	// set the progress bar
+	document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+	    this.MaterialProgress.setProgress( Math.ceil(((parseInt(question)/15) * 100)) );
+    });
+    
 	var lastDistType = localStorage.getItem("lastDistType");
 	if(!localStorage.getItem("lastDistType")) {
 		localStorage.setItem("lastDistType", "");
