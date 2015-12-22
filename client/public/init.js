@@ -77,7 +77,24 @@ $(function () {
 	
 	$("#answerForm").toggle();
 	$("#app").toggle();
+
 	
+	$.ajax({
+		url: "/api/v1/user/" + localStorage.getItem("userEmail"),
+		type: "GET",
+		success: function (data, textStatus, jqXHR) {
+			$("#header").append(data.user_data.name);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log(textStatus + ", " + errorThrown);
+		}
+	});
+	if(questionInt >= 0 && questionInt < 15) {
+		$("#startTest").html("Next task: " + questionInt + " out of 15");
+	} else {
+		window.open("completed.html", "_self");
+	}
+
 	$("#startTest").click(function () {
 
 		$("#app").toggle();
@@ -110,9 +127,6 @@ $(function () {
 				concentrationStart();
 			});
 		}
-
-		question++;
-		localStorage.setItem("question", question + "");
 
 	});
 });

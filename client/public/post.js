@@ -1,6 +1,6 @@
 function questionDataPost (questionData) {
   $.ajax({
-    url: "http://localhost:8080/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
+    url: "/api/v1/user/" + localStorage.getItem("userId") + "/question/" + localStorage.getItem("question"),
     type: "POST",
     data: JSON.stringify(questionData),
     contentType: 'application/json',

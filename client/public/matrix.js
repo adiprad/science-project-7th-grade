@@ -50,7 +50,6 @@ function matrixStart() {
   });
 
   stage.update();
-  actionButton.innerHTML = "";
   actionButton.disabled = true;
   setTimeout(matrixToSolve, 4000);
 }
@@ -119,6 +118,7 @@ function matrixSubmit() {
     }
   });
 
+  localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
 
   questionDataPost({
      score_percent : numerator/denominator,

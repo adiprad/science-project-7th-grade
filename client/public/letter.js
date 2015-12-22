@@ -29,7 +29,7 @@ function letterInit() {
 	timer = new Timer(20);
 }
 function letterStart() {
-
+	action.disabled = true;
 	header.innerHTML = "Memorize the letters!";
 
 	//create text object
@@ -96,6 +96,9 @@ function letterStart() {
 					}
 				} 
 			});
+
+			localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
 		    questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
 		    questionDataPost(questionData);
 

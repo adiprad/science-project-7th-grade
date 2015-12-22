@@ -10,6 +10,7 @@ var turns = 0;
 var cssColors = ["Red", "Green", "Blue", "Tan", "Orange", "Yellow", "Pink", "Purple", "LightSkyBlue", "LightGreen", "Teal", "DarkRed", "Olive", "Silver", "DarkKhaki", "BlanchedAlmond", "BlueViolet", "SlateGray"];
 var boxesSelected = [];
 var timer;
+var actionButton;
 function concentrationInit() {
   	header = document.getElementById("header");
   	actionButton = document.getElementById("action");
@@ -33,6 +34,7 @@ function concentrationInit() {
     timer = new Timer(60);
 }
 function concentrationStart() {
+    actionButton.disabled = true;
     timer.start(function (currentTime) {
       $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
       if(currentTime == 0) {
@@ -86,6 +88,9 @@ function concentrationStart() {
             //console.log(counter);
             if(counter == 8) {
               timer.stop();
+
+              localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
               questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
               questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
               questionDataPost(questionData);
