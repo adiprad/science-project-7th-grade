@@ -61,6 +61,14 @@
             width: 100%;
             color: red;
           }
+          .white-popup {
+            position: relative;
+            background: #FFF;
+            padding: 20px;
+            width: auto;
+            max-width: 500px;
+            margin: 20px auto;
+          }
     </style>
   </head>
   
@@ -75,8 +83,14 @@
     <div id="app">
         <br>
         <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" id="action">Start</button>
+        <div id="instBreak">
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" id="instructionsBtn">instructions</button>
         <br>
-        
             <canvas id="canvas" width="290" height="290"></canvas>
             <div id="distraction"></div>
         <br>
@@ -92,7 +106,40 @@
     <div id="intro">
         <br>
         <button id="startTest" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored">Start the Test</button>
-        <a href="completed.html" ></a>
+    </div>
+    <div id="instructionsBox">
+        <div id="matrixInst" class="white-popup">
+            <h2>Matrix</h2>
+            <p>The objective of this puzzle is to select the light-green squares in the grid.</p>
+            <ul>
+                <li>First, you will be shown a 5x5 grid of light-blue squares.</li>
+                <li>When you click the “Start” button, 5 of the squares will turn light-green. Memorize these squares!</li>
+                <li>After 4 seconds the squares will become light-blue again.</li>
+                <li>Select the squares that turned light-green.</li>
+                <li>When your finished, click “Submit”.</li>
+                <li>Good Luck!</li>
+            </ul>
+        </div>
+        <div id="letterInst" class="white-popup">
+            <h2>Letter</h2>
+            <p>The objective of the “Letter” puzzle is to memorize a random assortment of letters and type in the letter that is asked for.</p>
+            <ul>
+                <li>When you click the “Start” button, you will see a random assortment of 8 letters. Memorize these!</li>
+                <li>After 7 seconds, you will be asked to type in one of the letters shown to you.</li>
+                <li>Good Luck!</li>
+            </ul>
+        </div>
+        <div id="concentrationInst" class="white-popup">
+            <h2>Concentration</h2>
+            <p>The objective of Concentration is to match the tiles with their duplicate.</p>
+            <ul>
+                <li>When you click the “Start” button, you will see a 4x4 grid of black tiles.</li>
+                <li>When you click on a tile, it will show it’s color.</li>
+                <li>Select 2 tiles of the same color to solve the pair.</li>
+                <li>Solve all eight pairs to complete the task.</li>
+                <li>Good Luck!</li>
+            </ul>
+        </div>
     </div>
   </body>
   

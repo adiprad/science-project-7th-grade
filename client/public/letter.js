@@ -27,9 +27,21 @@ function letterInit() {
 
 	// Initialize timer object with max time of 20 seconds
 	timer = new Timer(20);
+
+	//initialize instructions
+	$("#instructionsBtn").magnificPopup({
+	    items: {
+	        src: '#letterInst',
+	        type: 'inline'
+	    }
+	});
 }
 function letterStart() {
 	action.disabled = true;
+
+	$("#instructionsBtn").toggle();
+	$("#instBreak").toggle();
+
 	header.innerHTML = "Memorize the letters!";
 
 	//create text object

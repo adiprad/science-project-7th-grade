@@ -25,13 +25,11 @@ $(function () {
 		{path: "./bensound-extremeaction.mp3", id: "extremeaction"}
 	]);
 
-
 	//remove
 	//localStorage.setItem("question", "0");
 	question = localStorage.getItem("question");
 	if(!localStorage.getItem("question")) {
-		localStorage.setItem("question", "0");
-		question = "0";
+		window.open("login.html", "_self");
 	}
 	
 	console.log('Question: ' + question);
@@ -44,11 +42,14 @@ $(function () {
     
 	var lastDistType = localStorage.getItem("lastDistType");
 	if(!localStorage.getItem("lastDistType")) {
-		localStorage.setItem("lastDistType", "");
-		lastDistType = "";
+		//window.open("login.html", "_self");
 	}
 
 	var distAmt = parseInt(localStorage.getItem("distractionAmt"));
+
+	if(!localStorage.getItem("distractionAmt")) {
+		window.open("login.html", "_self");
+	}
 	console.log("distractionAmt : " + distAmt);
 	console.log("lastDistType : " + lastDistType);
 	
@@ -77,8 +78,8 @@ $(function () {
 	
 	$("#answerForm").toggle();
 	$("#app").toggle();
+	$("#instructionsBox").toggle();
 
-	
 	$.ajax({
 		url: "/api/v1/user/" + localStorage.getItem("userEmail"),
 		type: "GET",
@@ -87,6 +88,7 @@ $(function () {
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + ", " + errorThrown);
+			window.open("login.html", "_self");
 		}
 	});
 	if(questionInt >= 0 && questionInt < 15) {

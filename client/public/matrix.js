@@ -29,9 +29,19 @@ function matrixInit() {
 
   // Timer for the Matrix
   timer = new Timer(30);
+  
+  $("#instructionsBtn").magnificPopup({
+    items: {
+        src: '#matrixInst',
+        type: 'inline'
+    }
+  });
 }
 
 function matrixStart() {
+
+  $("#instructionsBtn").toggle();
+  $("#instBreak").toggle();
   //console.log("matrixStart calle");
   matrixGrid.forEach(function (element, index, array) {
     element.graphics

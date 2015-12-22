@@ -32,9 +32,21 @@ function concentrationInit() {
       time_taken: 100
     };
     timer = new Timer(60);
+
+    //init instructions
+    $("#instructionsBtn").magnificPopup({
+      items: {
+          src: '#concentrationInst',
+          type: 'inline'
+      }
+    });
 }
 function concentrationStart() {
     actionButton.disabled = true;
+
+    $("#instructionsBtn").toggle();
+    $("#instBreak").toggle();
+
     timer.start(function (currentTime) {
       $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
       if(currentTime == 0) {

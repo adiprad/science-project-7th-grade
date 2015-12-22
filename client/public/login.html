@@ -61,7 +61,7 @@
 		          	  			localStorage.setItem("userId", id + "");
 		          	  			localStorage.setItem("distractionAmt", distAmt + "");
 		          	  			localStorage.setItem("userEmail", $("#emailField").val());
-		          	  			localStorage.setItem("question", (typeof data.length == "undefined") ? "" : data.length + "");
+		          	  			localStorage.setItem("question", (typeof data.length == "undefined") ? "0" : data.length + "");
 		          	  			localStorage.setItem("lastDistType", "");
 		          	  			window.open("/index.html", "_self");
 		          	  		}
