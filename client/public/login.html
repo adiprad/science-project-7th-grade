@@ -31,7 +31,7 @@
     </header>
     <!-- Email field -->
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="emailField">
+      <input class="mdl-textfield__input" id="emailField">
       <label class="mdl-textfield__label" for="emailField">Enter Email</label>
       <span class="mdl-textfield__error">Input is not a valid email!</span>
     </div>
@@ -44,7 +44,7 @@
     	$(function () {
     		$("#submit").click(function () {
     			$.ajax({
-		          	url: "api/v1/user/" + $("#emailField").val(),
+		          	url: "api/v1/user/" + $("#emailField").val().toLowerCase(),
 		          	type: "GET",
 		          	success: function(data, textStatus, jqXHR) {
 		          	  var id = data.id;
@@ -60,7 +60,7 @@
 		          	  		else {
 		          	  			localStorage.setItem("userId", id + "");
 		          	  			localStorage.setItem("distractionAmt", distAmt + "");
-		          	  			localStorage.setItem("userEmail", $("#emailField").val());
+		          	  			localStorage.setItem("userEmail", $("#emailField").val().toLowerCase());
 		          	  			localStorage.setItem("question", (typeof data.length == "undefined") ? "0" : data.length + "");
 		          	  			localStorage.setItem("lastDistType", "");
 		          	  			window.open("/index.html", "_self");

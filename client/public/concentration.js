@@ -50,9 +50,13 @@ function concentrationStart() {
     timer.start(function (currentTime) {
       $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
       if(currentTime == 0) {
+
+        localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
         questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
         questionData.time_taken = 100;
         questionDataPost(questionData);
+
       }
     });
  	  concentrationGrid.forEach(function (element, index, array) {
@@ -106,7 +110,6 @@ function concentrationStart() {
               questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
               questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
               questionDataPost(questionData);
-              location.reload();
             }
           } else {
             concentrationGrid[boxesSelected[0]].graphics

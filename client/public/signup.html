@@ -47,7 +47,7 @@
     <br>
     <!-- Email field -->
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="emailField">
+      <input class="mdl-textfield__input" id="emailField">
       <label class="mdl-textfield__label" for="emailField">Email...</label>
       <span class="mdl-textfield__error">Input is not a valid email!</span>
     </div>
@@ -70,7 +70,7 @@
           user_data: {
             age: $("#ageField").val(),
             name: $("#nameField").val(),
-            email: $("#emailField").val(),
+            email: $("#emailField").val().toLowerCase(),
             distraction_amt: $("#distractionField").val()
           }
         };

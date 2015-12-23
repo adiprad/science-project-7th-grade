@@ -62,6 +62,10 @@ function letterStart() {
 		timer.start(function (currentTime) {
 	      $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
 	      if(currentTime == 0) {
+
+            localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
+
 	        questionData.score_percent = 0;
 	        questionData.time_taken = 100;
 	        questionDataPost(questionData);

@@ -78,6 +78,10 @@ function matrixToSolve () {
   timer.start(function (currentTime) {
     $("#timer").html("<img src=\"./Chronometer.png\" height=\"30\" width=\"30\"> &nbsp;" + currentTime + "s");
     if(currentTime == 0) {
+
+      localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
+
       questionDataPost({
         score_percent : numerator/denominator,
         distraction_id : localStorage.getItem("distractionAmt"),

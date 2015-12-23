@@ -18,12 +18,6 @@ var questionTypes = [
 ];
 
 $(function () {
-	loadSounds([
-		{path: "./05-Binrpilot-Underground.mp3", id: "binrpilot"},
-		{path: "./bensound-popdance.mp3", id: "popdance"},
-		{path: "./bensound-dubstep.mp3", id: "dubstep"},
-		{path: "./bensound-extremeaction.mp3", id: "extremeaction"}
-	]);
 
 	//remove
 	//localStorage.setItem("question", "0");
@@ -42,7 +36,7 @@ $(function () {
     
 	var lastDistType = localStorage.getItem("lastDistType");
 	if(!localStorage.getItem("lastDistType")) {
-		//window.open("login.html", "_self");
+		
 	}
 
 	var distAmt = parseInt(localStorage.getItem("distractionAmt"));
@@ -52,29 +46,6 @@ $(function () {
 	}
 	console.log("distractionAmt : " + distAmt);
 	console.log("lastDistType : " + lastDistType);
-	
-	createjs.Sound.on("fileload", function (event) {
-		if(event.id == "extremeaction") {
-			console.log("File load event : " + JSON.stringify(event));
-			switch(distAmt) {
-				case 0:
-					break;
-				case 1:
-					if((questionInt % 5) == 0) {
-						playDist(lastDistType);
-					}
-					break;
-				case 2:
-					if((questionInt % 2) == 0) {
-						playDist(lastDistType);
-					}
-					break;
-				case 3:
-					playDist(lastDistType);
-					break;	
-			}
-		}
-	});
 	
 	$("#answerForm").toggle();
 	$("#app").toggle();
@@ -91,7 +62,7 @@ $(function () {
 			window.open("login.html", "_self");
 		}
 	});
-	if(questionInt >= 0 && questionInt < 15) {
+	if(questionInt >= 0 && questionInt <= 15) {
 		$("#startTest").html("Next task: " + questionInt + " out of 15");
 	} else {
 		window.open("completed.html", "_self");
@@ -101,6 +72,21 @@ $(function () {
 
 		$("#app").toggle();
 		$("#intro").toggle();
+
+
+		// Logic to play distraction or not
+		console.log('Distraction decision: lastDistType=' + lastDistType + '; distAmt=' + distAmt);
+		if (lastDistType == 'audio') {
+			// play video distraction
+			playDistByDistAmt(distAmt, lastDistType, questionInt);
+		} else {
+			// Load sound and then, play audio distraction
+			loadSound(distAmt, lastDistType, questionInt, function (event) {
+				console.log("File load event : " + JSON.stringify(event));
+				playDistByDistAmt(distAmt, lastDistType, questionInt);
+			});
+		}
+
 
 		if(questionTypes[question].type == "matrix") {
 			$("#header").html("Matrix");

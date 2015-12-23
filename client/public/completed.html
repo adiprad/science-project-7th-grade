@@ -60,7 +60,47 @@
     <header class="mdl-layout__header">
       <h2 id="header">Thank You</h2>
     </header>
-    <h3>You have completed the test.</h3>
+    <h3>You have completed the test</h3>
+
+    <h4 id="score">Your score is: </h4>
+
+    <button class="mdl-button mdl-js-button mdl-button--primary mdl-button--raised" id="logout">
+      logout
+    </button>
+    <script type="text/javascript">
+        var avg = 0;
+        $.ajax({
+            url: "/api/v1/user/" + localStorage.getItem("userId") + "/question",
+            type: "GET",
+            success: function(data, textStatus, jqXHR) {
+              if(typeof data.length == "undefined") {
+                window.open("login.html", "_self");
+              }
+              data.forEach(function (element, index, array) {
+                avg+=element.score_percent;
+              });
+              avg = Math.ceil((avg/data.length)*100);
+              $("#score").append(avg + "%");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              window.open("login.html", "_self");
+              console.log(textStatus + ", " + errorThrown);
+            }
+        });
+
+        setTimeout(function () {
+          localStorage.setItem("userEmail", "");
+          window.open("login.html", "_self");
+        }, 20000);
+        $(window).bind("beforeunload", function () {
+          localStorage.setItem("userEmail", "");
+          window.open("login.html", "_self");
+        });
+        $("#logout").click(function (evt) {
+          localStorage.setItem("userEmail", "");
+          window.open("login.html", "_self");
+        });
+    </script>
   </body>
   
 </html>
