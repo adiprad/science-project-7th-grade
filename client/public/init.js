@@ -19,6 +19,11 @@ var questionTypes = [
 
 $(function () {
 
+	// check for chrome browser
+	if (is.not.chrome()) {
+		window.open("NotInChromeBrowser.html", "_self");
+	}
+
 	//remove
 	//localStorage.setItem("question", "0");
 	question = localStorage.getItem("question");

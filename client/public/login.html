@@ -12,6 +12,9 @@
     <!-- AlertifyJS 1.0.6 -->
     <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.6/dist/js/alertify.js"></script>
 
+    <!-- IS JS module-->
+    <script type="text/javascript" src="is.min.js"></script>
+
     <!-- Styles -->
     <style type="text/css">
 	  body {
@@ -25,6 +28,7 @@
 	<title>Login</title>
 </head>
 <body>
+
 	<!-- Header -->
     <header class="mdl-layout__header">
       <h1 id="header">Login</h1>
@@ -41,12 +45,22 @@
     <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">submit</button>
 
     <script type="text/javascript">
+
     	$(function () {
+	    	// check for chrome browser
+			if (is.not.chrome()) {
+				window.open("NotInChromeBrowser.html", "_self");
+			}
+
     		$("#submit").click(function () {
     			$.ajax({
 		          	url: "api/v1/user/" + $("#emailField").val().toLowerCase(),
 		          	type: "GET",
 		          	success: function(data, textStatus, jqXHR) {
+		          	  if (typeof data.id == 'undefined') {
+		          	  	alertify.error("Unregistered Email!");
+		          	  	return;
+		          	  }
 		          	  var id = data.id;
 		          	  var distAmt = data.user_data.distraction_amt;
 		          	  $.ajax({
