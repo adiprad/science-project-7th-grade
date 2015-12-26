@@ -11,6 +11,7 @@ var cssColors = ["Red", "Green", "Blue", "Tan", "Orange", "Yellow", "Pink", "Pur
 var boxesSelected = [];
 var timer;
 var actionButton;
+var clickedTwice;
 function concentrationInit() {
   	header = document.getElementById("header");
   	actionButton = document.getElementById("action");
@@ -32,6 +33,8 @@ function concentrationInit() {
       time_taken: 100
     };
     timer = new Timer(60);
+
+    clickedTwice = false;
 
     //init instructions
     $("#instructionsBtn").magnificPopup({
@@ -91,7 +94,10 @@ function concentrationStart() {
 
         setTimeout(function () {
           turns++;
-          if(concentrationGrid[boxesSelected[0]].color == concentrationGrid[boxesSelected[1]].color) {
+          if(boxesSelected[0] == boxesSelected[1]) { 
+            clickedTwice = true;
+          }
+          if(concentrationGrid[boxesSelected[0]].color == concentrationGrid[boxesSelected[1]].color && !clickedTwice) {
             concentrationGrid[boxesSelected[0]].graphics
               .beginFill("DarkGray")
               .drawRect(0, 0, concentrationGridWidth, concentrationGridHeight); 
@@ -119,6 +125,7 @@ function concentrationStart() {
               .beginFill("Black")
               .drawRect(0, 0, concentrationGridWidth, concentrationGridHeight); 
           }
+          clickedTwice = false;
           boxesSelected = [];
           stage.update();
         }, 400);

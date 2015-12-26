@@ -56,6 +56,19 @@ $(function () {
 	$("#app").toggle();
 	$("#instructionsBox").toggle();
 
+	// Logic to play distraction or not
+	console.log('Distraction decision: lastDistType=' + lastDistType + '; distAmt=' + distAmt);
+	if (lastDistType == 'audio') {
+		// play video distraction
+		playDistByDistAmt(distAmt, lastDistType, questionInt);
+	} else {
+		// Load sound and then, play audio distraction
+		loadSound(distAmt, lastDistType, questionInt, function (event) {
+			console.log("File load event : " + JSON.stringify(event));
+			playDistByDistAmt(distAmt, lastDistType, questionInt);
+		});
+	}
+	
 	$.ajax({
 		url: "/api/v1/user/" + localStorage.getItem("userEmail"),
 		type: "GET",
@@ -77,20 +90,6 @@ $(function () {
 
 		$("#app").toggle();
 		$("#intro").toggle();
-
-
-		// Logic to play distraction or not
-		console.log('Distraction decision: lastDistType=' + lastDistType + '; distAmt=' + distAmt);
-		if (lastDistType == 'audio') {
-			// play video distraction
-			playDistByDistAmt(distAmt, lastDistType, questionInt);
-		} else {
-			// Load sound and then, play audio distraction
-			loadSound(distAmt, lastDistType, questionInt, function (event) {
-				console.log("File load event : " + JSON.stringify(event));
-				playDistByDistAmt(distAmt, lastDistType, questionInt);
-			});
-		}
 
 
 		if(questionTypes[question].type == "matrix") {
