@@ -111,19 +111,10 @@ function concentrationStart() {
             if(counter == 8) {
               timer.stop();
 
-              var timeTaken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
-
-              if(numerator > 5) {
-                numerator = 5;
-              }
-              if(timeTaken == 0) {
-                timeTaken = 1;
-              }
-
               localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
 
               questionData.score_percent = Math.ceil((8/(turns/1.5)) * 100) / 100;
-              questionData.time_taken = timeTaken;
+              questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
               questionDataPost(questionData);
             }
           } else {
