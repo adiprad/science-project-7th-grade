@@ -124,20 +124,28 @@ function matrixSubmit() {
   var numerator = 0;
   var denominator = 5;
 
-  uniques.forEach(function (element, uniquesIndex, array) {
+  for (var i = 0; i < uniques.length; i++) {
     //console.log("unique : " + element + " Selected box : " + selectedBoxes[element]);
-    if(selectedBoxes[element] == true) {
+    if(selectedBoxes[uniques[i]] == true) {
       numerator++;
       //console.log("Numerator : " + numerator);
     }
-  });
+  };
+    
+  var timeTaken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
 
+  if(numerator > 5) {
+    numerator = 5;
+  }
+  if(timeTaken == 0) {
+    timeTaken = 1;
+  }
   localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
 
   questionDataPost({
      score_percent : numerator/denominator,
      distraction_id : localStorage.getItem("distractionAmt"),
-     time_taken : Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100)
+     time_taken : timeTaken
   });
 }
 

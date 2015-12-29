@@ -97,6 +97,8 @@ function letterStart() {
 
 			timer.stop();
 
+			localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+
 			var input = $("#answer").val().toUpperCase();
 			unicodes.forEach(function (element, index, array) {
 				var charData = String.fromCharCode(element);
@@ -113,9 +115,17 @@ function letterStart() {
 				} 
 			});
 
-			localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
+			var timeTaken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
 
-		    questionData.time_taken = Math.ceil(((timer.maxTime - timer.getCurrentTime())/timer.maxTime)*100);
+			if(numerator > 5) {
+			  numerator = 5;
+			}
+			if(timeTaken == 0) {
+			  timeTaken = 1;
+			}
+
+
+		    questionData.time_taken = timeTaken;
 		    questionDataPost(questionData);
 
 			location.reload();

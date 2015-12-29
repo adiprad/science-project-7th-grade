@@ -39,16 +39,16 @@ exports.postUserInfo = function(req, res) {
       }
 
       client.query("INSERT INTO userinfo(user_data) VALUES(($1)) RETURNING id", [userData], function(err, result) {
-       done();
-       if (err) {
-          console.log('query() failed : ' + err);
-          return res.status(500).json({ success: false, data: err });
-      }
+           done();
+           if (err) {
+              console.log('query() failed : ' + err);
+              return res.status(500).json({ success: false, data: err });
+          }
 
-      console.log('GET result : ' + JSON.stringify(result.rows));
-      done();
-      return res.json(result.rows[0]);
-  });
+          console.log('GET result : ' + JSON.stringify(result.rows));
+          done();
+          return res.json(result.rows[0]);
+      });
 
   });
 };
