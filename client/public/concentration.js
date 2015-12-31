@@ -30,7 +30,7 @@ function concentrationInit() {
     questionData = {
       score_percent: 0,
       distraction_id: localStorage.getItem("distractionAmt"),
-      time_taken: 100
+      time_taken: 1
     };
     timer = new Timer(60);
 
@@ -57,7 +57,7 @@ function concentrationStart() {
         localStorage.setItem("question", parseInt(localStorage.getItem("question")) + 1);
 
         questionData.score_percent = 0;
-        questionData.time_taken = 100;
+        questionData.time_taken = 1;
         questionDataPost(questionData);
 
       }

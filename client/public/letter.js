@@ -22,7 +22,7 @@ function letterInit() {
 	questionData = {
 		score_percent: 0,
 		distraction_id: localStorage.getItem("distractionAmt"),
-		time_taken: 100
+		time_taken: 1
 	};
 
 	// Initialize timer object with max time of 20 seconds
@@ -67,7 +67,7 @@ function letterStart() {
 
 
 	        questionData.score_percent = 0;
-	        questionData.time_taken = 100;
+	        questionData.time_taken = 1;
 	        questionDataPost(questionData);
 	      }
 	    });

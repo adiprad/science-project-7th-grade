@@ -85,7 +85,7 @@ function matrixToSolve () {
       questionDataPost({
         score_percent : 0,
         distraction_id : localStorage.getItem("distractionAmt"),
-        time_taken : 100
+        time_taken : 1
       });
     }
   });
